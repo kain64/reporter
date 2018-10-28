@@ -21,7 +21,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-
+	"fmt"
+	"crypto/tls"
 	"github.com/IzakMarais/reporter/grafana"
 	"github.com/IzakMarais/reporter/report"
 	"github.com/gorilla/mux"
@@ -33,6 +34,7 @@ var port = flag.String("port", ":8686", "Port to serve on")
 var templateDir = flag.String("templates", "templates/", "Directory for custom TeX templates")
 
 func main() {
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	flag.Parse()
 	log.SetOutput(os.Stdout)
 
